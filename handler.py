@@ -1,7 +1,10 @@
 import json
-
+import numpy as np
 
 def hello(event, context):
+
+    print(np.arrange(15).reshape(3, 5))
+
     body = {
         "message": "Go Serverless v1.0! Your function executed successfully!",
         "input": event
