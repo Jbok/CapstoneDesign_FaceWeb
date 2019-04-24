@@ -47,8 +47,9 @@ provider:
 
 # you can add packaging information here
 package:
- exclude:
-   - env/**
+  exclude:
+    - env/**
+    - node_modules/**
 #  include:
 #    - include-me.py
 #    - include-me-dir/**
@@ -103,3 +104,6 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-python-requirements

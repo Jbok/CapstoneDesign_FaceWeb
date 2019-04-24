@@ -2,6 +2,7 @@
 .Python
 *.pyc
 env/
+node_modules/
 build/
 develop-eggs/
 dist/
