@@ -54,6 +54,11 @@ def test(event, context):
     print(result)
 
 
+    response = {
+        "statusCode": 200,
+        "body": result
+    }
 
+    return response
 
 
