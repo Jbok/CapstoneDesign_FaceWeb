@@ -50,6 +50,10 @@ package:
   exclude:
     - env/**
     - node_modules/**
+    - .git/**
+    - .gitignore
+    - .serverless/**
+    - local_test_data/**
 #  include:
 #    - include-me.py
 #    - include-me-dir/**
