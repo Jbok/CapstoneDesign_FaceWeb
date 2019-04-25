@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import facial_landmark
 
 def hello(event, context):
 
@@ -25,3 +26,7 @@ def hello(event, context):
         "event": event
     }
     """
+
+def test(event, context):
+    result = facial_landmark.cal_assymetry('shape_predictor_68_face_landmarks.dat','balance.png')
+    print(result)
