@@ -1,19 +1,18 @@
-import cv2
-import numpy
+import cv2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 import dlib
 import imutils
 from imutils import face_utils
 import math
-import enum
+from enum import IntEnum
 
-class Point(enum.Enum):
+class Ptr(IntEnum):
     X = 0
     Y = 1
 
 def cal_degrees(p1, p2):
     # Calculate the degrees of two points
-    width = abs(p1[Point.X] - p2[Point.X])
-    height = abs(p1[Point.Y] - p2[Point.Y])
+    width = abs(p1[Ptr.X] - p2[Ptr.X])
+    height = abs(p1[Ptr.Y] - p2[Ptr.Y])
 
     if height == 0:
         return 0
@@ -70,8 +69,8 @@ def cal_asymmetry(trained_data, image_path):
         # loop over the (x, y)-coordinates for the facial landmarks
         # and draw them on the image
         for (x, y) in shape:
-            points[point_num][Point.X] = x
-            points[point_num][Point.Y] = y
+            points[point_num][Ptr.X] = x
+            points[point_num][Ptr.Y] = y
 
         #     # print Point
         #     print ("p.{}".format(point),(x,y))

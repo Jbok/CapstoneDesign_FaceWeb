@@ -1,11 +1,9 @@
 import json
-import numpy as np
 import facial_landmark
 
 def hello(event, context):
 
-    print(np.arrange(15).reshape(3, 5))
-
+    
     body = {
         "message": "Go Serverless v1.0! Your function executed successfully!",
         "input": event
@@ -28,5 +26,5 @@ def hello(event, context):
     """
 
 def test(event, context):
-    result = facial_landmark.cal_assymetry('shape_predictor_68_face_landmarks.dat','balance.png')
+    result = facial_landmark.cal_asymmetry('shape_predictor_68_face_landmarks.dat','balance.png')
     print(result)
