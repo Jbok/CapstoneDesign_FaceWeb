@@ -62,10 +62,17 @@ package:
 functions:
   hello:
     handler: handler.hello
-
+    events:
+      - http:
+          path: test/hello
+          method: post
   
   test:
     handler: handler.test
+    events:
+      - http:
+          path: test/image
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
