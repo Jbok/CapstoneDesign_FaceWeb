@@ -56,9 +56,10 @@ def test(event, context):
 
     response = {
         "statusCode": 200,
-        "body": result
+        "body": json.dumps(result)
     }
 
+    
     return response
 
 
