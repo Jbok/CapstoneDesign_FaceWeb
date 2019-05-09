@@ -56,10 +56,10 @@ def test(event, context):
 
     response = {
         "statusCode": 200,
-        "body": json.dumps(result)
+        "data" : {"currentData": result, "histories":"HISTORY"},
+	"message" : "Hello"
     }
 
-    
     return response
 
 
