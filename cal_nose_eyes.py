@@ -26,7 +26,12 @@ def cal_degrees(p1, p2, p3, p4):
 	
     return math.degrees(math.atan(float(width)/float(height)))
 
-
+def cal_distances(p1, p2, p3, p4):
+   # Calculate the distances of two points
+   a = p3-p1
+   b = p4-p2 
+   result = math.sqrt((a*a)+(b*b))
+   return result
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -49,16 +54,13 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # detect faces in the grayscale image
 rects = detector(gray, 1)
 
+
 # loop over the face detections
 for (i, rect) in enumerate(rects):
    # determine the facial landmarks for the face region, then
    # convert the facial landmark (x, y)-coordinates to a NumPy
    # array
 
-   # by yumin 
-   if i >= 1:
-      print("Only one face can be detected")
-      break
 
    shape = predictor(gray, rect)
    shape = face_utils.shape_to_np(shape)
@@ -92,121 +94,73 @@ for (i, rect) in enumerate(rects):
       if point == 27:
             print("nose-front of eyes \n")
             cv2.line(image, (x, y), (shape[39][0], shape[39][1]), (255, 0, 0), 1)
-            a = shape[39][0]-x
-            b = shape[39][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.39 :",result)
+            print("Distance between p.{}".format(point), "and p.39 :",cal_distances(x,y,shape[39][0],shape[39][1]))
             print("Degree between p.{}".format(point), "and p.39 :", cal_degrees(x,y,shape[39][0],shape[39][1]), "\n")
 
             cv2.line(image, (x, y), (shape[42][0], shape[42][1]), (255, 0, 0), 1)
-            a = shape[42][0]-x
-            b = shape[42][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.42 :",result, "\n")
+            print("Distance between p.{}".format(point), "and p.42 :",cal_distances(x,y,shape[42][0],shape[42][1]))
             print("Degree between p.{}".format(point), "and p.42 :", cal_degrees(x,y,shape[42][0],shape[42][1]), "\n")
 
             cv2.line(image, (x, y), (shape[36][0], shape[36][1]), (255, 0, 0), 1)
-            a = shape[36][0]-x
-            b = shape[36][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.36 :",result)
+            print("Distance between p.{}".format(point), "and p.36 :",cal_distances(x,y,shape[36][0],shape[36][1]))
             print("Degree between p.{}".format(point), "and p.36 :", cal_degrees(x,y,shape[36][0],shape[36][1]), "\n")
 
             cv2.line(image, (x, y), (shape[45][0], shape[45][1]), (255, 0, 0), 1)
-            a = shape[45][0]-x
-            b = shape[45][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.45 :",result)
+            print("Distance between p.{}".format(point), "and p.45 :",cal_distances(x,y,shape[45][0],shape[45][1]))
             print("Degree between p.{}".format(point), "and p.45 :", cal_degrees(x,y,shape[45][0],shape[45][1]), "\n")
 
       if point == 28:
             print("nose-front of eyes \n")
             cv2.line(image, (x, y), (shape[39][0], shape[39][1]), (255, 0, 0), 1)
-            a = shape[39][0]-x
-            b = shape[39][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.39 :",result)
+            print("Distance between p.{}".format(point), "and p.39 :",cal_distances(x,y,shape[39][0],shape[39][1]))
             print("Degree between p.{}".format(point), "and p.39 :", cal_degrees(x,y,shape[39][0],shape[39][1]), "\n")
 
             cv2.line(image, (x, y), (shape[42][0], shape[42][1]), (255, 0, 0), 1)
-            a = shape[42][0]-x
-            b = shape[42][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.42 :",result, "\n")
+            print("Distance between p.{}".format(point), "and p.42 :",cal_distances(x,y,shape[42][0],shape[42][1]))
             print("Degree between p.{}".format(point), "and p.42 :", cal_degrees(x,y,shape[42][0],shape[42][1]), "\n")
 
             cv2.line(image, (x, y), (shape[36][0], shape[36][1]), (255, 0, 0), 1)
-            a = shape[36][0]-x
-            b = shape[36][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.36 :",result)
+            print("Distance between p.{}".format(point), "and p.36 :", cal_distances(x,y,shape[36][0],shape[36][1]))
             print("Degree between p.{}".format(point), "and p.36 :", cal_degrees(x,y,shape[36][0],shape[36][1]), "\n")
 
             cv2.line(image, (x, y), (shape[45][0], shape[45][1]), (255, 0, 0), 1)
-            a = shape[45][0]-x
-            b = shape[45][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.45 :",result)
+            print("Distance between p.{}".format(point), "and p.45 :",cal_distances(x,y,shape[45][0],shape[45][1]))
             print("Degree between p.{}".format(point), "and p.45 :", cal_degrees(x,y,shape[45][0],shape[45][1]), "\n")      
          
       if point == 29:
             print("nose-front of eyes \n")
             cv2.line(image, (x, y), (shape[39][0], shape[39][1]), (255, 0, 0), 1)
-            a = shape[39][0]-x
-            b = shape[39][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.39 :",result)
+            print("Distance between p.{}".format(point), "and p.39 :",cal_distances(x,y,shape[39][0],shape[39][1]))
             print("Degree between p.{}".format(point), "and p.39 :", cal_degrees(x,y,shape[39][0],shape[39][1]), "\n")
             
             cv2.line(image, (x, y), (shape[42][0], shape[42][1]), (255, 0, 0), 1)
-            a = shape[42][0]-x
-            b = shape[42][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.42 :",result, "\n")
+            print("Distance between p.{}".format(point), "and p.42 :",cal_distances(x,y,shape[42][0],shape[42][1]))
             print("Degree between p.{}".format(point), "and p.42 :", cal_degrees(x,y,shape[42][0],shape[42][1]), "\n")
             
             cv2.line(image, (x, y), (shape[36][0], shape[36][1]), (255, 0, 0), 1)
-            a = shape[36][0]-x
-            b = shape[36][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.36 :",result)
+            print("Distance between p.{}".format(point), "and p.36 :",cal_distances(x,y,shape[36][0],shape[36][1]))
             print("Degree between p.{}".format(point), "and p.36 :", cal_degrees(x,y,shape[36][0],shape[36][1]), "\n")
 
             cv2.line(image, (x, y), (shape[45][0], shape[45][1]), (255, 0, 0), 1)
-            a = shape[45][0]-x
-            b = shape[45][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.45 :",result)
+            print("Distance between p.{}".format(point), "and p.45 :",cal_distances(x,y,shape[45][0],shape[45][1]))
             print("Degree between p.{}".format(point), "and p.45 :", cal_degrees(x,y,shape[45][0],shape[45][1]), "\n")
       
       if point == 30:
             print("nose-front of eyes \n")
             cv2.line(image, (x, y), (shape[39][0], shape[39][1]), (255, 0, 0), 1)
-            a = shape[39][0]-x
-            b = shape[39][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.39 :",result)
+            print("Distance between p.{}".format(point), "and p.39 :",cal_distances(x,y,shape[39][0],shape[39][1]))
             print("Degree between p.{}".format(point), "and p.39 :", cal_degrees(x,y,shape[39][0],shape[39][1]), "\n")
 
             cv2.line(image, (x, y), (shape[42][0], shape[42][1]), (255, 0, 0), 1)
-            a = shape[42][0]-x
-            b = shape[42][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.42 :",result, "\n")
+            print("Distance between p.{}".format(point), "and p.42 :",cal_distances(x,y,shape[42][0],shape[42][1]))
             print("Degree between p.{}".format(point), "and p.42 :", cal_degrees(x,y,shape[42][0],shape[42][1]), "\n")
 
             cv2.line(image, (x, y), (shape[36][0], shape[36][1]), (255, 0, 0), 1)
-            a = shape[36][0]-x
-            b = shape[36][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.36 :",result)
+            print("Distance between p.{}".format(point), "and p.36 :",cal_distances(x,y,shape[36][0],shape[36][1]))
             print("Degree between p.{}".format(point), "and p.36 :", cal_degrees(x,y,shape[36][0],shape[36][1]), "\n")
 
             cv2.line(image, (x, y), (shape[45][0], shape[45][1]), (255, 0, 0), 1)
-            a = shape[45][0]-x
-            b = shape[45][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.45 :",result)
+            print("Distance between p.{}".format(point), "and p.45 :",cal_distances(x,y,shape[45][0],shape[45][1]))
             print("Degree between p.{}".format(point), "and p.45 :", cal_degrees(x,y,shape[45][0],shape[45][1]), "\n")      
 
       

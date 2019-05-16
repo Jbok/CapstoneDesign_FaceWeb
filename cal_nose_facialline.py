@@ -25,6 +25,14 @@ def cal_degrees(p1, p2, p3, p4):
 	
     return math.degrees(math.atan(float(width)/float(height)))
 
+def cal_distances(p1, p2, p3, p4):
+   # Calculate the distances of two points
+   a = p3-p1
+   b = p4-p2 
+   result = math.sqrt((a*a)+(b*b))
+   return result
+
+
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--shape-predictor", required=True,
@@ -91,17 +99,11 @@ for (i, rect) in enumerate(rects):
          temp = 0
          for temp in range(8):   
             cv2.line(image, (x, y), (shape[temp][0], shape[temp][1]), (255, 0, 0), 1)
-            a = shape[temp][0]-x
-            b = shape[temp][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.{}".format(temp),":",result)
+            print("Distance between p.{}".format(point), "and p.{}".format(temp),":",cal_distances(x,y,shape[temp][0],shape[temp][1]))
             print("Degree between p.{}".format(point), "and p.",temp," :", cal_degrees(x,y,shape[temp][0],shape[temp][1]), "\n")
 
             cv2.line(image, (x, y), (shape[16-temp][0], shape[16-temp][1]), (255, 0, 0), 1)
-            a = shape[16-temp][0]-x
-            b = shape[16-temp][1]-y
-            result = math.sqrt((a*a)+(b*b))
-            print("Distance between p.{}".format(point), "and p.{}".format(16-temp),":",result)
+            print("Distance between p.{}".format(point), "and p.{}".format(16-temp),":",cal_distances(x,y,shape[16-temp][0],shape[16-temp][1]))
             print("Degree between p.{}".format(point), "and p.",16-temp," :", cal_degrees(x,y,shape[16-temp][0],shape[16-temp][1]), "\n")
          
       # print Point
