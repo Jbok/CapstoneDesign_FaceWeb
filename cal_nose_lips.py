@@ -100,7 +100,9 @@ for (i, rect) in enumerate(rects):
          print("nose-lip \n")
          cv2.line(image, (x, y), (shape[48][0], shape[48][1]), (255, 0, 0), 1)
          print("Distance between p.{}".format(point), "and p.48 :",cal_distances(x,y,shape[48][0],shape[48][1]))
+         p30_48_dist = cal_distances(x,y,shape[48][0],shape[48][1])
          print("Degree between p.{}".format(point), "and p.48 :", cal_degrees(x,y,shape[48][0],shape[48][1]), "\n")
+         p30_48_deg = cal_degrees(x,y,shape[48][0],shape[48][1])
 
          cv2.line(image, (x, y), (shape[54][0], shape[54][1]), (255, 0, 0), 1)
          print("Distance between p.{}".format(point), "and p.54 :",cal_distances(x,y,shape[54][0],shape[54][1]))
@@ -119,6 +121,11 @@ for (i, rect) in enumerate(rects):
       # print Point
      # print ("p.{}".format(point),(x,y))
       point = point + 1
+
+
+   
+
+
 
 
 # show the output image with the face detections + facial landmarks

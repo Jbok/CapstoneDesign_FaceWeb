@@ -55,80 +55,79 @@ def cal_asymmetry(trained_data, image_path):
   
   # loop over the face detections
 
-for (i, rect) in enumerate(rects):
-   # determine the facial landmarks for the face region, then
-   # convert the facial landmark (x, y)-coordinates to a NumPy
-   # array
+   for (i, rect) in enumerate(rects):
+    # determine the facial landmarks for the face region, then
+      # convert the facial landmark (x, y)-coordinates to a NumPy
+      # array
 
-    if i >= 1 :
-        print("nononono")
-        break
-        return
+    
+      shape = predictor(gray, rect)
+      shape = face_utils.shape_to_np(shape)
 
-   shape = predictor(gray, rect)
-   shape = face_utils.shape_to_np(shape)
-
-   # convert dlib's rectangle to a OpenCV-style bounding box
-   # [i.e., (x, y, w, h)], then draw the face bounding box
-   (x, y, w, h) = face_utils.rect_to_bb(rect)
+      # convert dlib's rectangle to a OpenCV-style bounding box
+      # [i.e., (x, y, w, h)], then draw the face bounding box
+      (x, y, w, h) = face_utils.rect_to_bb(rect)
    
-   # Print Rectangle 
-   cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+      # Print Rectangle 
+      cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-   # show the face number
-   cv2.putText(image, "Face #{}".format(i + 1), (x - 10, y - 10),
+      # show the face number
+      cv2.putText(image, "Face #{}".format(i + 1), (x - 10, y - 10),
       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-   # Print Rect Num
-   print("Face #{}".format(i + 1))   
+      # Print Rect Num
+      print("Face #{}".format(i + 1))   
 
-   # Point Number
-   point = 0
+      # Point Number
+      point = 0
 
-   # loop over the (x, y)-coordinates for the facial landmarks
-   # and draw them on the image
-   # loop over the (x, y)-coordinates for the facial landmarks
-   # and draw them on the image
-   for (x, y) in shape:
-      cv2.putText(image, "{}".format(point), (x+2,y+2),
+      # loop over the (x, y)-coordinates for the facial landmarks
+      # and draw them on the image
+      # loop over the (x, y)-coordinates for the facial landmarks
+      # and draw them on the image
+      for (x, y) in shape:
+         cv2.putText(image, "{}".format(point), (x+2,y+2),
          cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 0, 255), 1)
-      cv2.circle(image, (x, y), 2, (0, 255, 255), -1)
+         cv2.circle(image, (x, y), 2, (0, 255, 255), -1)
 
   
 
-      # Print nose-lip distance calculation     
-      if point == 30:
-         print("nose-lip \n")
-         cv2.line(image, (x, y), (shape[48][0], shape[48][1]), (255, 0, 0), 1)
-         print("Distance between p.{}".format(point), "and p.48 :",cal_distances(x,y,shape[48][0],shape[48][1]))
-         print("Degree between p.{}".format(point), "and p.48 :", cal_degrees(x,y,shape[48][0],shape[48][1]), "\n")
+         # Print nose-lip distance calculation     
+         if point == 30:
+            print("nose-lip \n")
+            cv2.line(image, (x, y), (shape[48][0], shape[48][1]), (255, 0, 0), 1)
+            print("Distance between p.{}".format(point), "and p.48 :",cal_distances(x,y,shape[48][0],shape[48][1]))
+            p30_48_dist = cal_distances(x,y,shape[48][0],shape[48][1])
+            print("Degree between p.{}".format(point), "and p.48 :", cal_degrees(x,y,shape[48][0],shape[48][1]), "\n")
+            p30_48_deg = cal_degrees(x,y,shape[48][0],shape[48][1])
+
+            cv2.line(image, (x, y), (shape[54][0], shape[54][1]), (255, 0, 0), 1)
+            print("Distance between p.{}".format(point), "and p.54 :",cal_distances(x,y,shape[54][0],shape[54][1]))
+            p30_54_dist = cal_distances(x,y,shape[54][0],shape[54][1])
+            print("Degree between p.{}".format(point), "and p.54 :", cal_degrees(x,y,shape[54][0],shape[54][1]), "\n")
+            p30_54_deg = cal_degrees(x,y,shape[54][0],shape[54][1])
+
+            cv2.line(image, (x, y), (shape[50][0], shape[50][1]), (255, 0, 0), 1)
+            print("Distance between p.{}".format(point), "and p.50 :",cal_distances(x,y,shape[50][0],shape[50][1]))
+            p30_50_dist = cal_distances(x,y,shape[50][0],shape[50][1])
+            print("Degree between p.{}".format(point), "and p.50 :", cal_degrees(x,y,shape[50][0],shape[50][1]), "\n")
+            p30_50_deg = cal_degrees(x,y,shape[50][0],shape[50][1])
+
+            cv2.line(image, (x, y), (shape[52][0], shape[52][1]), (255, 0, 0), 1)
+            print("Distance between p.{}".format(point), "and p.52 :",cal_distances(x,y,shape[52][0],shape[52][1]))
+            p30_52_dist = cal_distances(x,y,shape[52][0],shape[52][1])
+            print("Degree between p.{}".format(point), "and p.52 :", cal_degrees(x,y,shape[52][0],shape[52][1]), "\n")
+            p30_52_deg = cal_degrees(x,y,shape[52][0],shape[52][1])
 
 
-         cv2.line(image, (x, y), (shape[54][0], shape[54][1]), (255, 0, 0), 1)
-         print("Distance between p.{}".format(point), "and p.54 :",cal_distances(x,y,shape[54][0],shape[54][1]))
-         print("Degree between p.{}".format(point), "and p.54 :", cal_degrees(x,y,shape[54][0],shape[54][1]), "\n")
-
-         cv2.line(image, (x, y), (shape[50][0], shape[50][1]), (255, 0, 0), 1)
-         print("Distance between p.{}".format(point), "and p.50 :",cal_distances(x,y,shape[50][0],shape[50][1]))
-         print("Degree between p.{}".format(point), "and p.50 :", cal_degrees(x,y,shape[50][0],shape[50][1]), "\n")
-
-         cv2.line(image, (x, y), (shape[52][0], shape[52][1]), (255, 0, 0), 1)
-         print("Distance between p.{}".format(point), "and p.52 :",cal_distances(x,y,shape[52][0],shape[52][1]))
-         print("Degree between p.{}".format(point), "and p.52 :", cal_degrees(x,y,shape[52][0],shape[52][1]), "\n")
 
 
-
-      # print Point
-     # print ("p.{}".format(point),(x,y))
-      point = point + 1
-
+         # print Point
+         # print ("p.{}".format(point),(x,y))
+         point = point + 1
 
 
-
-        jaw_degrees = 90 - cal_degrees(points[9], points[28])
-				
-        eyebrow_degrees = cal_degrees(points[20], points[25])
-				
-        lips_degrees = cal_degrees(points[49], points[55])
-
-        return {'jaw':jaw_degrees, 'eye':eyebrow_degrees, 'lips':lips_degrees}
+      return {'Distance between p.30 and p.48':p30_48_dist, 'Degree between p.30 and p.48':p30_48_deg, 
+      'Distance between p.30 and p.54':p30_54_dist, 'Degree between p.30 and p.54':p30_54_deg,
+      'Distance between p.30 and p.50':p30_50_dist, 'Degree between p.30 and p.50':p30_50_deg,
+      'Distance between p.30 and p.52':p30_52_dist, 'Degree between p.30 and p.52':p30_52_deg}     
