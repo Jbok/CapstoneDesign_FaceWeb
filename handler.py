@@ -56,8 +56,13 @@ def test(event, context):
 
     response = {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            },
+        # "body": ""
         "data" : {"currentData": result, "histories":"HISTORY"},
-	"message" : "Hello"
+	    "message" : "Hello"
     }
 
     return response
