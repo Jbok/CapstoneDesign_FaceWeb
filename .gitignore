@@ -19,5 +19,6 @@ var/
 *.egg
 *.png
 *.dat
+*.jpg
 # Serverless directories
 .serverless
