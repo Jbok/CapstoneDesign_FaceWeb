@@ -60,13 +60,6 @@ package:
 
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: test/hello
-          method: post
-  
   test:
     handler: handler.test
     events:
@@ -77,16 +70,8 @@ functions:
           response:
             headers:
               Content-Type: integration.response.header.Content-Type
-          cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-            allowCredentials: false
+          cors: true
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
