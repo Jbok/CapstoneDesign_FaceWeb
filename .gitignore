@@ -19,5 +19,6 @@ var/
 *.egg
 *.png
 *.dat
+local_test_data
 # Serverless directories
 .serverless
