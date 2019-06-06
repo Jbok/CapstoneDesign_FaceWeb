@@ -1,5 +1,5 @@
 # USAGE
-# python3 facial_landmark.py --shape-predictor shape_predictor_68_face_landmarks.dat --image twotwo.jpg 
+# python fltest.py --shape-predictor shape_predictor_68_face_landmarks.dat --image example_01.jpg 
 
 # Using Dlib & iBUG300-W dataset
 
@@ -25,23 +25,45 @@ def cal_degrees(p1, p2,shape):
 	
     return math.degrees(math.atan(float(width)/float(height)))
 
+def cal_distances(p1, p2,shape):
+   # Calculate the distances of two points
+   a = shape[p2][0]-shape[p1][0]
+   b = shape[p2][1]-shape[p1][1] 
+   result = math.sqrt((a*a)+(b*b))
+   return result
 
-def lips_average(shape):
-  return ((abs(cal_degrees(27,54,shape)-cal_degrees(27,48,shape)))+abs((cal_degrees(27,52,shape)-cal_degrees(27,50,shape))))/2
+def draw_lines(p1,shape):
+   for temp in range(48,55,2):
+    cv2.line(image, (shape[temp][0],shape[temp][1]), (shape[p1][0],shape[p1][1]), (255, 0, 0), 1)
+    
+   
+def result_print(p1,shape):
+   draw_lines(p1,shape)
+   for temp in range(48,55,2):
+    print(p1,"and ",temp, "distance : ", cal_distances(p1,temp,shape))
+    print("\n")
 
-def nose_average(shape):
-   return (abs(cal_degrees(27,30,shape)))
+   print("\n\n")
 
-def facialline_average(shape):
-   sum = 0
-   for temp1 in range(1,8,1):
-    sum += abs(cal_degrees(27,temp1,shape)-cal_degrees(27,16-temp1,shape))
-   return (sum/8)
+   for temp1 in range(48,55,2):
+    print(p1,"and ",temp1, "degree : ", cal_degrees(p1,temp1,shape))
+
+   
 
 def cal_asymmetry(rects):
+   print(rects)
+   print(type(rects))
    if len(rects) == 1:
+      print(rects)
+      if len(rects) > 1:
+         print("over two")
+         return -2
          # loop over the face detections
       for (i, rect) in enumerate(rects):
+      # determine the facial landmarks for the face region, then
+      # convert the facial landmark (x, y)-coordinates to a NumPy
+      # array
+
          shape = predictor(gray, rect)
          shape = face_utils.shape_to_np(shape)
 
@@ -57,26 +79,39 @@ def cal_asymmetry(rects):
             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
       # Print Rect Num
-       #  print("Face #{}".format(i + 1))   
+         print("Face #{}".format(i + 1))   
 
       # Point Number
          point = 0
 
+      # loop over the (x, y)-coordinates for the facial landmarks
+      # and draw them on the image
          for (x, y) in shape:
             cv2.putText(image, "{}".format(point), (x+2,y+2),
                cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 0, 255), 1)
             cv2.circle(image, (x, y), 2, (0, 255, 255), -1)
+
+   
+
+         # Print nose-lip distance calculation     
+         #if point == 30:
+            #print("nose-lip \n")
+            #draw_lines(x,y,shape[48][0],shape[48][1])
+            #cv2.line(image, (x, y), (shape[48][0], shape[48][1]), (255, 0, 0), 1)
+            #print("Distance between p.{}".format(point), "and p.48 :",cal_distances(x,y,shape[48][0],shape[48][1]))
+            #p30_48_dist = cal_distances(x,y,shape[48][0],shape[48][1])
+            #print("Degree between p.{}".format(point), "and p.48 :", cal_degrees(x,y,shape[48][0],shape[48][1]), "\n")
+         # p30_48_deg = cal_degrees(x,y,shape[48][0],shape[48][1])
+
+         
+         # print Point
+      # print ("p.{}".format(point),(x,y))
             point = point + 1
 
-         jaw_degrees = facialline_average(shape)
-         nose_degrees = nose_average(shape)
-         lips_degrees = lips_average(shape)
-         print("jaw: ", jaw_degrees, "nose: ",nose_degrees, "lips: ",lips_degrees)
-         return {'jaw':jaw_degrees, 'nose':nose_degrees, 'lips':lips_degrees}
-   elif len(rects) < 1 :
+         result_print(27,shape)
+   else:
+      print("zero")
       return -1   
-   elif len(rects) > 1 :
-      return -2   
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--shape-predictor", required=True,
@@ -99,6 +134,5 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 rects = detector(gray, 1) 
 cal_asymmetry(rects)
 
-
-#cv2.imshow("Output", image)
+cv2.imshow("Output", image)
 cv2.waitKey(0)
