@@ -35,7 +35,6 @@ def cal_degrees(p1, p2,shape):
 <<<<<<< HEAD
     return math.degrees(math.atan(float(width)/float(height)))
 
-
 def lips_average(shape):
   return ((abs(cal_degrees(27,54,shape)-cal_degrees(27,48,shape)))+abs((cal_degrees(27,52,shape)-cal_degrees(27,50,shape))))/2
 
@@ -47,6 +46,7 @@ def facialline_average(shape):
    for temp1 in range(1,8,1):
     sum += abs(cal_degrees(27,temp1,shape)-cal_degrees(27,16-temp1,shape))
    return (sum/8)
+
 
 def cal_asymmetry(rects):
    if len(rects) == 1:
@@ -110,7 +110,8 @@ rects = detector(gray, 1)
 cal_asymmetry(rects)
 
 
-#cv2.imshow("Output", image)
+cv2.imshow("Output", image)
+cv2.imwrite('iu2.jpg', image)
 cv2.waitKey(0)
 =======
     return math.degrees(math.atan(float(height)/float(width)))
