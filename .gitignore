@@ -19,6 +19,11 @@ var/
 *.egg
 *.png
 *.dat
+<<<<<<< HEAD
 *.jpg
+=======
+*.json
+local_test_data
+>>>>>>> sls
 # Serverless directories
 .serverless

@@ -60,12 +60,18 @@ package:
 
 
 functions:
-  hello:
-    handler: handler.hello
-
-  
   test:
     handler: handler.test
+    events:
+      - http:
+          path: test/image
+          method: post
+          integration: lambda
+          response:
+            headers:
+              Content-Type: integration.response.header.Content-Type
+          cors: true
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

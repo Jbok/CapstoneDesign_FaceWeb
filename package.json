@@ -3,6 +3,7 @@
   "description": "https://github.com/Jbok/SW_CapstoneDesign_LUCKY",
   "version": "0.1.0",
   "dependencies": {
+    "firebase": "^6.1.0",
     "serverless-python-requirements": "^4.3.0"
   },
   "devDependencies": {
