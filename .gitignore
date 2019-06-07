@@ -19,6 +19,7 @@ var/
 *.egg
 *.png
 *.dat
+*.json
 local_test_data
 # Serverless directories
 .serverless

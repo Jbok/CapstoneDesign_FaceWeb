@@ -4,6 +4,7 @@ import imutils
 from imutils import face_utils
 import math
 from enum import IntEnum
+from datetime import datetime
 
 class Ptr(IntEnum):
     X = 0
@@ -111,4 +112,4 @@ def cal_asymmetry(trained_data, image_path):
 				
         lips_degrees = cal_degrees(points[49], points[55])
 
-        return {'jaw':jaw_degrees, 'eye':eyebrow_degrees, 'lips':lips_degrees}
+        return {'date':datetime.today().strftime("%Y/%m/%d"), 'jaw':format(jaw_degrees, ".2f"), 'eye':format(eyebrow_degrees, ".2f"), 'lips':format(lips_degrees, ".2f")}
