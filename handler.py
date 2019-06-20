@@ -43,17 +43,7 @@ def test(event, context):
     f4.close()
     s3_client.upload_file('/tmp/uid.txt', BUCKET_NAME, './uid.txt')
 
-    result_historyData = firebase_function.get_data(uid)
 
-    resultArr = []
-
-    print(result_historyData)
-    print(type(result_historyData))
-    if result_historyData is not None:
-        for key, value in result_historyData.items():
-            resultArr.insert(0, json.dumps(key))
-    
-    tempStr = str(json.dumps(result_historyData))
     response = ""
 
     if result_currentData[0] == -1:
@@ -63,7 +53,7 @@ def test(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": "true",
                 },
-            "data" : {"currentData": result_currentData[1], "histories": result_historyData, "imgData": img_data, "numOfPeople" : "zero"}
+            "data" : {"currentData": result_currentData[1], "imgData": result_currentData[2], "numOfPeople" : "zero"}
         }
 
     elif result_currentData[0] == -2:
@@ -73,7 +63,7 @@ def test(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": "true",
                 },
-            "data" : {"currentData": result_currentData[1], "histories": result_historyData, "imgData": result_currentData[2],"numOfPeople" : "more"}
+            "data" : {"currentData": result_currentData[1], "imgData": result_currentData[2],"numOfPeople" : "more"}
         }
 
     elif result_currentData[0] == -3:
@@ -83,7 +73,7 @@ def test(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": "true",
                 },
-            "data" : {"currentData": result_currentData[1], "histories": result_historyData, "imgData": result_currentData[2], "numOfPeople" : "side"}
+            "data" : {"currentData": result_currentData[1], "imgData": result_currentData[2], "numOfPeople" : "tilted"}
         }
 
     elif result_currentData[0] == 0:
@@ -94,6 +84,6 @@ def test(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": "true",
                 },
-            "data" : {"currentData": result_currentData[1], "histories": result_historyData, "imgData": result_currentData[2], "numOfPeople" : "one"}
+            "data" : {"currentData": result_currentData[1], "imgData": result_currentData[2], "numOfPeople" : "one"}
         }
     return response

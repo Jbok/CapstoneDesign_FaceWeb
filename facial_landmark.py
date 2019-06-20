@@ -33,16 +33,25 @@ def cal_degrees(p1, p2,shape):
    return math.degrees(math.atan(float(width)/float(height)))
 
 def lips_average(shape):
-   return ((abs(cal_degrees(27,54,shape)-cal_degrees(27,48,shape)))+abs((cal_degrees(27,52,shape)-cal_degrees(27,50,shape))))/2
+   if abs(cal_degrees(27,54,shape)-cal_degrees(27,48,shape)) >= 10 or abs((cal_degrees(27,52,shape)-cal_degrees(27,50,shape))) >= 10:
+      return -1
+   else:
+      return ((abs(cal_degrees(27,54,shape)-cal_degrees(27,48,shape)))+abs((cal_degrees(27,52,shape)-cal_degrees(27,50,shape))))/2
 
 def nose_average(shape):
-   return (abs(cal_degrees(27,30,shape)))
+   if abs(cal_degrees(27,29,shape)) >= 10:
+      return -1
+   else:   
+      return (abs(cal_degrees(27,29,shape)))
 
 def facialline_average(shape):
    sum = 0
-   for temp1 in range(1,8,1):
+   for temp1 in range(4,8,1):
+    if abs(cal_degrees(27,temp1,shape)-cal_degrees(27,16-temp1,shape)) >= 10:
+      return -1
+    else:
       sum += abs(cal_degrees(27,temp1,shape)-cal_degrees(27,16-temp1,shape))
-   return (sum/8)
+   return (sum/4)
 
 def draw_lines(image, shape):
    for temp in range(48,55,2):
@@ -71,6 +80,7 @@ def cal_asymmetry(trained_data, image_path):
    # Make 2D array
    points = [[0]*2 for i in range(200)]
 
+   flag = 0
 
    # loop over the face detections
    if len(rects) >= 1:
@@ -104,24 +114,38 @@ def cal_asymmetry(trained_data, image_path):
 
 
          draw_lines(image, shape)
-         cv2.imwrite('/tmp/tempLandmark.jpg', image)
-      
-         base64Data = ""
-
-         with open('/tmp/tempLandmark.jpg', 'rb') as imageFile:
-            base64Data = base64.b64encode(imageFile.read())
-
-         base64Str = base64Data.decode('utf-8')
-         
          jaw_degrees = facialline_average(shape)
          nose_degrees = nose_average(shape)
          lips_degrees = lips_average(shape)
+         if jaw_degrees < 0:
+            flag = -1
 
-         if len(rects) > 1:
-            return [-2, {'date': "-", 'jaw': "-", 'nose': "-", "lips" : "-"}, {"imageBase64": base64Str}]
-         else:
+         if nose_degrees < 0:
+            flag = -1
+
+         if lips_degrees < 0:
+            flag = -1
+
+
+      cv2.imwrite('/tmp/tempLandmark.jpg', image)
+      base64Data = ""
+      with open('/tmp/tempLandmark.jpg', 'rb') as imageFile:
+         base64Data = base64.b64encode(imageFile.read())
+      base64Str = base64Data.decode('utf-8')
+
+      if len(rects) > 1:
+         return [-2, {'date': "-", 'jaw': "-", 'nose': "-", "lips" : "-"}, {"imageBase64": base64Str}]
+      else:
+         if flag == -1:
+            return [-3, {'date': "-", 'jaw': "-", 'nose': "-", "lips" : "-"}, {"imageBase64": base64Str}]
+         else:      
             return [0, {'date':datetime.today().strftime("%Y/%m/%d"), 'jaw':format(jaw_degrees, ".2f"), 'nose':format(nose_degrees, ".2f"), 'lips':format(lips_degrees, ".2f")}, {'imageBase64': base64Str}]
 
    elif len(rects) < 1:
-      return [-1, {'date': "-", 'jaw': "-", 'nose': "-", "lips" : "-"}, {"imageBase64": ""}]
+      cv2.imwrite('/tmp/tempLandmark.jpg', image)
+      base64Data = ""
+      with open('/tmp/tempLandmark.jpg', 'rb') as imageFile:
+         base64Data = base64.b64encode(imageFile.read())
+      base64Str = base64Data.decode('utf-8')
+      return [-1, {'date': "-", 'jaw': "-", 'nose': "-", "lips" : "-"}, {"imageBase64": base64Str}]
 
