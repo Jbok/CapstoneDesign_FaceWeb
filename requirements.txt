@@ -1,6 +1,6 @@
 boto3==1.9.135
 botocore==1.12.135
-Pillow==6.0.0
+Pillow==8.3.2
 dlib==19.17.0
 docutils==0.14
 imutils==0.5.2
