@@ -5,7 +5,7 @@ dlib==19.17.0
 docutils==0.14
 imutils==0.5.2
 jmespath==0.9.4
-numpy==1.16.3
+numpy==1.22.0
 opencv-python==4.1.0.25
 python-dateutil==2.8.0
 s3transfer==0.2.0
